@@ -9,12 +9,6 @@ const port = process.env.PORT || 7000;
 
 app.use("/api/v1", taskRoute);
 
-// app.get("/", (req, res) => {
-//   res.render("home", {
-//     title: "Search Hacker News",
-//   });
-// });
-
 async function startDatabase() {
   try {
     await sequelize.sync();

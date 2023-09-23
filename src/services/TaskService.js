@@ -1,4 +1,3 @@
-const { response, get } = require("../app");
 const Task = require("../models/Task");
 
 const createTask = async (req, res) => {
@@ -48,7 +47,6 @@ const getAllTasks = async (req, res) => {
         description: task.description,
         dueDate: task.dueDate.toISOString().split("T")[0],
         status: task.completed ? "Completed" : "Pending",
-        url: `/api/v1/tasks/${task.id}`,
       };
     });
 
@@ -56,12 +54,7 @@ const getAllTasks = async (req, res) => {
       success: true,
       data: mappedTasks,
     };
-    // return res.status(200).send(response);
-    return res.status(200).render("allTasks", {
-      layout: "index",
-      tasks: response.data,
-      success: response.success,
-    });
+    return res.status(200).send(response);
   } catch (error) {
     console.log(error);
     res.status(500).send("Internal Server Error");
@@ -80,8 +73,6 @@ const getTask = async (req, res) => {
       };
       return res.status(404).send(response);
     }
-    // const dueDate = task.dueDate;
-    // const resDueDate = dueDate.split("T")[0];
     const response = {
       success: true,
       message: "Task fetched successfully",
@@ -94,11 +85,7 @@ const getTask = async (req, res) => {
       },
     };
 
-    // return res.status(200).send(response);
-    return res.status(200).render("taskDetails", {
-      layout: "index",
-      task: response,
-    });
+    return res.status(200).send(response);
   } catch (error) {
     console.log(error);
     return res.status(500).send("Internal Server Error");
